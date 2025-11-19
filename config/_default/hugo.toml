@@ -2,6 +2,7 @@
 # Refer to the theme docs for more details about each of these parameters.
 # https://jpanther.github.io/congo/docs/getting-started/
 
+# baseURL = "https://hugo-blog-bdt.pages.dev/"
 baseURL = "https://hugo-blog-bdt.pages.dev/"
 languageCode = "zh-Hans"
 defaultContentLanguage = "zh-Hans"
@@ -27,7 +28,7 @@ isCJKLanguage = true
 _target.lang = "zh-Hans"
 
 [outputs]
-home = ["HTML", "RSS", "JSON", "articles"]
+home = ["HTML", "RSS", "JSON"]
 
 [privacy]
   [privacy.vimeo]
