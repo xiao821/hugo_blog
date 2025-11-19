@@ -3,7 +3,7 @@
 # https://jpanther.github.io/congo/docs/getting-started/
 
 # baseURL = "https://hugo-blog-bdt.pages.dev/"
-baseURL = "https://hugo-blog-bdt.pages.dev/"
+baseURL = "blog.211508.xyz"
 languageCode = "zh-Hans"
 defaultContentLanguage = "zh-Hans"
 defaultContentLanguageInSubdir = false
