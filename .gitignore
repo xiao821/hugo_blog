@@ -1,0 +1,101 @@
+# Hugo 构建输出目录
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Hugo 可执行文件
+hugo.exe
+hugo.linux
+hugo.darwin
+
+# Obsidian 配置 - 选择性包含重要配置
+.obsidian/*
+!.obsidian/app.json
+!.obsidian/appearance.json
+!.obsidian/core-plugins.json
+!.obsidian/community-plugins.json
+!.obsidian/hotkeys.json
+!.obsidian/graph.json
+## 排除缓存和临时文件
+.obsidian/workspace.json
+.obsidian/cache/
+.obsidian-git-data
+.trash/
+
+# 操作系统相关文件
+.DS_Store
+Thumbs.db
+
+# 编辑器和IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+
+# 临时文件
+tmp/
+*.tmp
+
+# Node.js 依赖 (如果使用 npm 或 yarn)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# 构建工具缓存
+.cache/
+.parcel-cache/
+
+# 备份文件
+*.bak
+*.bak*
+*.backup
+*.backup*
+
+# Front Matter 工具备份
+tools/add_frontmatter_backups/
+
+# 压缩文件
+#*.tar.gz
+#*.zip
+
+# 自定义缓存和临时目录
+.hugo_cache/
+.publish/
+/_vendor/
+
+# 主题文件 (如果使用 git submodule 管理主题)
+themes/* (如果不想版本控制主题文件可以取消注释)
+
+# 部署相关文件
+.deploy_git/
+.netlify/
+vercel.json
+
+# 本地开发配置
+local.toml
+development.toml
+
+# 数据库文件
+*.db
+*.sqlite
+
+# 证书文件
+*.pem
+*.key
+*.crt
+
+# 系统生成的文件
+*.orig
+.history/
+
+/.obsidian/workspace.json
+/hugo_stats.json
