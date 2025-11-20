@@ -52,7 +52,7 @@ fingerprintAlgorithm = "sha256"
   showTableOfContents = false
   showTaxonomies = false
   showWordCount = false
-  showComments = false
+  showComments = true
   # sharingLinks = ["facebook", "x-twitter", "mastodon", "pinterest", "reddit", "linkedin", "email", "threads", "telegram", "line", "weibo", "xing", "bluesky"]
 
 [list]
@@ -86,3 +86,25 @@ fingerprintAlgorithm = "sha256"
   # bing = ""
   # pinterest = ""
   # yandex = ""
+
+
+[comments]
+  enabled = true
+  provider = "giscus"
+
+  [comments.giscus]
+    repo = "xiao821/blog_comment"
+    repoID = "R_kgDOQZR2Bg"
+
+    # 下面两个用你在 giscus 后台看到的真实值替换
+    category = "Announcements"
+    categoryID = "DIC_kwDOQZR2Bs4Cx_SI"
+
+    mapping = "pathname"
+    strict = 0
+    reactionsEnabled = 1
+    emitMetadata = 0
+    inputPosition = "bottom"
+    theme = "preferred_color_scheme"
+    lang = "zh-CN"
+    lazyLoading = false
