@@ -100,11 +100,11 @@ fingerprintAlgorithm = "sha256"
     category = "Announcements"
     categoryID = "DIC_kwDOQZR2Bs4Cx_SI"
 
-    mapping = "pathname"
+    mapping = "title"
     strict = 0
     reactionsEnabled = 1
     emitMetadata = 0
-    inputPosition = "bottom"
+    inputPosition = "top"
     theme = "preferred_color_scheme"
     lang = "zh-CN"
     lazyLoading = false
