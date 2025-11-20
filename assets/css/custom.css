@@ -1,0 +1,17 @@
+/* Custom overrides for article content width */
+
+.max-w-prose {
+  max-width: 75ch; /* 比默认 65ch 略宽一点 */
+  margin-left: auto;
+  margin-right: auto; /* 让内容区域居中 */
+}
+
+/* Center footer menu items */
+footer nav ul {
+  justify-content: center;
+  align-items: center;
+}
+
+footer nav ul li.group {
+  text-align: center;
+}
