@@ -4,7 +4,7 @@
 
 # baseURL = "https://hugo-blog-bdt.pages.dev/"
 baseURL = "https://blog.211508.xyz"
-languageCode = "zh-Hans"
+languageCode = "简体中文"
 defaultContentLanguage = "zh-Hans"
 defaultContentLanguageInSubdir = false
 timeZone = "Asia/Shanghai"
@@ -25,7 +25,7 @@ lastmod = ["lastmod", ":fileModTime"]
 
 [[cascade]]
 isCJKLanguage = true
-_target.lang = "zh-Hans"
+_target.lang = "简体中文"
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]

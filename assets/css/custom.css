@@ -15,3 +15,12 @@ footer nav ul {
 footer nav ul li.group {
   text-align: center;
 }
+
+/* Center footer copyright and attribution text */
+footer > div.flex.items-center {
+  justify-content: center;
+}
+
+footer > div.flex.items-center > div:first-child {
+  text-align: center;
+}
