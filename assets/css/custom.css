@@ -231,6 +231,70 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
   }
 }
 
+/* Mobile Navigation Horizontal Scroll */
+@media (max-width: 640px) {
+  /* Navigation wrapper with scroll */
+  .mobile-nav-wrapper {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    margin-left: 1rem;
+  }
+
+  .mobile-nav-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    padding-bottom: 0.25rem;
+    flex-wrap: nowrap !important;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .mobile-nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Navigation items don't wrap */
+  .mobile-nav-scroll > li {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Ensure last item has right padding for smooth scrolling */
+  .mobile-nav-scroll > li:last-child {
+    padding-right: 1rem;
+  }
+
+  /* Gradient fade hint on the right */
+  .mobile-nav-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, transparent, var(--tw-bg-opacity, #f3f4f6));
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .dark .mobile-nav-wrapper::after {
+    background: linear-gradient(to right, transparent, #0f172a);
+  }
+
+  /* Better touch targets for navigation links */
+  header nav a,
+  header nav button {
+    padding: 0.5rem 0.75rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 640px) {
   /* Override body padding for better mobile spacing */
@@ -344,6 +408,20 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
     padding-left: 1rem;
     font-size: 0.9rem;
   }
+
+  /* Better article header on mobile */
+  article header h1 {
+    font-size: 1.875rem !important; /* 30px */
+    line-height: 1.25 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Better article footer on mobile */
+  article footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Tablet responsive styles */
@@ -363,33 +441,3 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
   }
 }
 
-/* Additional mobile-friendly utilities */
-@media (max-width: 640px) {
-  /* Better article header on mobile */
-  article header h1 {
-    font-size: 1.875rem !important; /* 30px */
-    line-height: 1.25 !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* Better article footer on mobile */
-  article footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  /* Navigation improvements on mobile */
-  nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Improve touch targets for navigation */
-  nav a {
-    padding: 0.5rem 0.75rem;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
-}
