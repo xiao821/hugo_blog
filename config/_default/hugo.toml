@@ -10,7 +10,7 @@ defaultContentLanguageInSubdir = false
 timeZone = "Asia/Shanghai"
 
 enableRobotsTXT = true
-summaryLength = 0
+summaryLength = 30
 
 [pagination]
   pagerSize = 10
