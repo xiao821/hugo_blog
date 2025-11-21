@@ -1,0 +1,51 @@
+---
+title: "使用 Crawlee 框架进行爬虫时的常见问题及解决方案"
+date: 2024-09-17
+tags: ["node.js", "Crawlee", "爬虫"]
+slug: "crawlee"
+---
+
+
+按照 Crawlee 官网的描述，仅需 Node.js 版本高于 16.0.0 即可。但在实际运用时，还会遇到一些问题。
+
+## 1. 执行 `npx crawlee create —项目名称` 时可能出现的问题
+
+![](https://i-blog.csdnimg.cn/direct/30097e9840154b7bb3efab1bf60678ea.png)
+
+这个问题经过一番查证，**可能是需要网络加速的原因才能进行解决**，所以这里可以推荐 **Watt Tooltik 软件**。该软件可以进行网络加速，可以解决这个问题。
+
+---
+
+## 2. 下载加速后仍可能出现 CA 证书不匹配的问题
+
+（截图有误）  
+![](https://i-blog.csdnimg.cn/direct/803aeb15e3b84fa7ab30bddaac19a24a.png)
+
+这个时候还是需要用到 **Watt Tooltik 软件**：
+
+1. 打开软件后，点击“打开” → 选中证书，会跳转到相应的目录下。
+2. 在该目录中可以看到若干文件，**需要点击后缀名为 `.cer` 的文件进行安装证书**。
+3. 安装完证书后，**需要在电脑上配置环境变量**（系统变量或用户变量均可）：
+   - **变量名**：`NODE_EXTRA_CA_CERTS`  
+   - **变量值**：`.cer` 证书文件的完整路径  
+4. 最后**重启命令行窗口**即可解决问题，此时可以正常创建 Crawlee 项目。
+
+![](https://img-blog.csdnimg.cn/img_convert/eefc34097ade408e2937bb452187a309.png)
+
+---
+
+## 3. 运行项目时可能仍会报错
+
+若执行 `npm start` 运行项目时出现如下错误：
+
+![](https://i-blog.csdnimg.cn/direct/bd139cd6a0ca4c37811924f8cdb74503.jpeg)
+
+此时还需要手动安装 Playwright 依赖：
+
+```bash
+npx playwright install --with-deps
+```
+
+---
+
+✅ **完成以上步骤后，项目即可成功运行！！！！**

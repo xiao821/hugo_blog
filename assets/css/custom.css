@@ -1,26 +1,179 @@
+/* Global Page Background */
+body {
+  background-color: #f3f4f6; /* Light gray background */
+}
+
+.dark body {
+  background-color: #0f172a; /* Dark blue/gray background */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 /* Custom overrides for article content width */
-
 .max-w-prose {
-  max-width: 75ch; /* 比默认 65ch 略宽一点 */
+  max-width: 85ch; /* 增加阅读宽度 (原 75ch) */
   margin-left: auto;
-  margin-right: auto; /* 让内容区域居中 */
+  margin-right: auto;
 }
 
-/* Center footer menu items */
-footer nav ul {
-  justify-content: center;
+/* Prevent horizontal overflow */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.prose {
+  max-width: 100%;
+}
+
+.prose img,
+.prose video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+/* Card Styling */
+.post-card {
+  position: relative; /* Necessary for stretched link positioning */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px; /* Restore padding to give content breathing room in single column view */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.dark .post-card {
+  background-color: #1e293b;
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Title Styles */
+.post-card-title a {
+  display: block;
+  text-decoration: none;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Stretched Link Implementation: Makes the whole card clickable via the title link */
+.post-card-title a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.post-card-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #64748b; /* Slate-500 */
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.dark .post-card-excerpt {
+  color: #94a3b8; /* Slate-400 */
+}
+
+.post-card-meta {
+  margin-top: auto;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
 }
 
-footer nav ul li.group {
-  text-align: center;
+.dark .post-card-meta {
+  border-top-color: #334155;
 }
 
-/* Center footer copyright and attribution text */
-footer > div.flex.items-center {
-  justify-content: center;
+.post-card-date {
+  font-size: 0.85rem;
+  color: #94a3b8;
 }
 
-footer > div.flex.items-center > div:first-child {
-  text-align: center;
+.post-card-meta-tags {
+  display: flex;
+  gap: 8px;
 }
+
+/* Explicitly define Grid for article list to ensure spacing */
+.article-list-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Force single column always */
+  gap: 2.5rem; /* 40px vertical gap */
+  max-width: 900px; /* 增加列表宽度限制 (原 800px) */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Base Tag Style */
+.tag-link {
+  position: relative; /* Ensure tags are clickable above the stretched link */
+  z-index: 2; 
+  display: inline-flex;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.tag-link:hover {
+  opacity: 0.8;
+}
+
+/* Tag Colors Variants */
+.tag-color-0 { background-color: #eff6ff; color: #2563eb; } /* Blue */
+.tag-color-1 { background-color: #f0fdf4; color: #16a34a; } /* Green */
+.tag-color-2 { background-color: #fff7ed; color: #ea580c; } /* Orange */
+.tag-color-3 { background-color: #faf5ff; color: #9333ea; } /* Purple */
+.tag-color-4 { background-color: #ecfeff; color: #0891b2; } /* Cyan */
+.tag-color-5 { background-color: #fff1f2; color: #e11d48; } /* Rose */
+
+.dark .tag-color-0 { background-color: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+.dark .tag-color-1 { background-color: rgba(22, 163, 74, 0.15); color: #4ade80; }
+.dark .tag-color-2 { background-color: rgba(234, 88, 12, 0.15); color: #fb923c; }
+.dark .tag-color-3 { background-color: rgba(147, 51, 234, 0.15); color: #c084fc; }
+.dark .tag-color-4 { background-color: rgba(8, 145, 178, 0.15); color: #22d3ee; }
+.dark .tag-color-5 { background-color: rgba(225, 29, 72, 0.15); color: #fb7185; }
+
+/* Footer alignment */
+footer nav ul { justify-content: center; }
+footer nav ul li.group { text-align: center; }
+footer > div.flex.items-center { justify-content: center; flex-direction: column; gap: 0.5rem; }

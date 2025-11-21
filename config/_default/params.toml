@@ -32,8 +32,8 @@ fingerprintAlgorithm = "sha256"
   showScrollToTop = true
 
 [homepage]
-  layout = "profile" # valid options: page, profile, custom
-  showRecent = true
+  layout = "custom" # valid options: page, profile, custom
+  showRecent = false
   recentLimit = 10
 
 [article]
@@ -60,7 +60,7 @@ fingerprintAlgorithm = "sha256"
   showSummary = true
   showTableOfContents = false
   showTaxonomies = false
-  groupByYear = true
+  groupByYear = false
   paginationWidth = 1
 
 [sitemap]

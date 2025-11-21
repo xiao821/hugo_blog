@@ -1,0 +1,42 @@
+<article class="post-card">
+  <h3 class="post-card-title text-xl font-bold text-neutral-900 dark:text-neutral-100">
+    {{ if .Params.externalUrl }}
+      <a class="hover:text-primary-600 dark:hover:text-primary-400" href="{{ .Params.externalUrl }}" target="_blank" rel="external">
+        {{ .Title | emojify }}
+      </a>
+    {{ else }}
+      <a class="hover:text-primary-600 dark:hover:text-primary-400" href="{{ .Permalink }}">
+        {{ .Title | emojify }}
+      </a>
+    {{ end }}
+  </h3>
+
+  <div class="post-card-excerpt">
+    {{ with .Summary }}
+      {{ . | plainify | emojify }}
+    {{ else }}
+      {{ .Plain | truncate 120 | emojify }}
+    {{ end }}
+  </div>
+
+  <div class="post-card-meta">
+    <time class="post-card-date" datetime="{{ .Date.Format "2006-01-02" }}">
+      {{ .Date.Format "2006-01-02" }}
+    </time>
+
+    {{ $tags := .GetTerms "tags" }}
+    {{ if $tags }}
+      <div class="post-card-meta-tags">
+        {{ range $index, $tag := first 3 $tags }}
+          {{ $colorIndex := mod $index 6 }}
+          <a
+            href="{{ $tag.Permalink }}"
+            class="tag-link tag-color-{{ $colorIndex }}"
+          >
+            {{ $tag.LinkTitle }}
+          </a>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</article>

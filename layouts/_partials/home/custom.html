@@ -1,0 +1,26 @@
+<article class="mb-16">
+  <header class="max-w-3xl">
+    <h1 class="mb-6 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title | default .Site.Title | emojify }}
+    </h1>
+    <p class="text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
+      {{ with .Site.Params.homepageDescription }}
+        {{ . | emojify }}
+      {{ else }}
+        {{ .Content | plainify | emojify }}
+      {{ end }}
+    </p>
+  </header>
+</article>
+
+{{ $posts := where .Site.RegularPages "Type" "posts" }}
+{{ if gt (len $posts) 0 }}
+  <section aria-label="文章列表" class="mt-12">
+    <!-- 使用 article-list-grid 类来强制样式生效 -->
+    <div class="article-list-grid">
+      {{ range $posts.ByDate.Reverse }}
+        {{ partial "article-link.html" . }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
