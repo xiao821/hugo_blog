@@ -1,9 +1,9 @@
 <article class="mb-16">
-  <header class="max-w-3xl">
-    <h1 class="mb-6 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+  <header class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0">
+    <h1 class="mb-6 mt-0 text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-neutral break-words">
       {{ .Title | default .Site.Title | emojify }}
     </h1>
-    <p class="text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
+    <p class="text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
       {{ with .Site.Params.homepageDescription }}
         {{ . | emojify }}
       {{ else }}

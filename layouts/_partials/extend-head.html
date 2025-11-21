@@ -1,0 +1,29 @@
+<!-- Mobile optimization meta tags -->
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- Additional mobile-friendly styles -->
+<style>
+  /* Prevent text size adjustment on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Improve touch scrolling on iOS */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure touch-friendly tap targets */
+  @media (max-width: 640px) {
+    a:not(.tag-link), button {
+      padding: 0.5rem;
+    }
+  }
+</style>
+
