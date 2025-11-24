@@ -19,11 +19,11 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Ensure touch-friendly tap targets */
+  /* Ensure touch-friendly tap targets (only in main nav) */
   @media (max-width: 640px) {
-    a:not(.tag-link), button {
+    .mobile-nav-wrapper a,
+    .mobile-nav-wrapper button {
       padding: 0.5rem;
     }
   }
 </style>
-

@@ -1,0 +1,89 @@
+<script>
+  (function () {
+    function scrollToTop() {
+      // Try multiple methods to ensure scrolling works
+      console.log("Attempting to scroll to top");
+      
+      // Method 1: Use window.scrollTo
+      try {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+        console.log("Method 1 (window.scrollTo) attempted");
+      } catch (e) {
+        console.log("Method 1 failed:", e);
+      }
+
+      // Method 2: Directly set scroll positions
+      try {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        console.log("Method 2 (scrollTop) attempted");
+      } catch (e) {
+        console.log("Method 2 failed:", e);
+      }
+
+      // Method 3: Use scrollingElement
+      try {
+        if (document.scrollingElement) {
+          document.scrollingElement.scrollTop = 0;
+          console.log("Method 3 (scrollingElement) attempted");
+        }
+      } catch (e) {
+        console.log("Method 3 failed:", e);
+      }
+
+      // Method 4: Navigate to anchor
+      try {
+        var topElement = document.getElementById("the-top");
+        if (topElement) {
+          topElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          console.log("Method 4 (scrollIntoView) attempted");
+        }
+      } catch (e) {
+        console.log("Method 4 failed:", e);
+      }
+    }
+
+    function attachToTopClick() {
+      var container = document.getElementById("to-top");
+      if (!container) {
+        console.log("to-top container not found");
+        return;
+      }
+
+      var link = container.querySelector("a");
+      if (!link) {
+        console.log("to-top link not found");
+        return;
+      }
+
+      // Remove any existing event listeners by cloning the element
+      var newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+
+      newLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        console.log("Scroll to top clicked - current scroll position:", window.pageYOffset || document.documentElement.scrollTop);
+        
+        scrollToTop();
+
+        return false;
+      });
+
+      console.log("to-top click handler attached successfully");
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", function () {
+        attachToTopClick();
+      });
+    } else {
+      attachToTopClick();
+    }
+  })();
+</script>
