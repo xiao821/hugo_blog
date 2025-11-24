@@ -15,6 +15,11 @@ summaryLength = 30
 [pagination]
   pagerSize = 10
 
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
 [frontmatter]
 format = "yaml"
 # 自动日期填充配置
