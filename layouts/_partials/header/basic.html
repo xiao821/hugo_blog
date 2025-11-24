@@ -13,7 +13,13 @@
               {{ if and (eq .Params.action "locale") (or (not page.IsTranslated) (not hugo.IsMultilingual)) }}
                 {{ continue }}
               {{ end }}
-              <li class="group mb-0 me-4 sm:me-7 sm:last:me-0.5 flex-shrink-0">
+              {{ $isCurrent := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
+              {{ with .PageRef }}
+                {{ if or (eq $.Section .) (eq $.Type .) }}
+                  {{ $isCurrent = true }}
+                {{ end }}
+              {{ end }}
+              <li class="group mb-0 me-4 sm:me-7 sm:last:me-0.5 flex-shrink-0{{ if $isCurrent }} nav-item-active{{ end }}">
                 {{ if eq .Params.action "search" }}
                   {{ $.Scratch.Add "searchCount" 1 }}
                   {{ if $.Site.Params.enableSearch | default false }}
@@ -88,7 +94,7 @@
                       </span>
                     {{- end -}}{{- if .Params.showName | default true -}}
                       <span
-                        class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                        class="nav-item-label decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
                         >{{ .Name | markdownify | emojify }}</span
                       >
                     {{ end }}</a
@@ -113,4 +119,3 @@
     {{ end }}
   </nav>
 </header>
-

@@ -1,0 +1,74 @@
+{{ define "main" }}
+  {{ $pages := where .Site.RegularPages "Section" "posts" }}
+
+  <header>
+    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title }}
+    </h1>
+    {{ with .Content }}
+      <section class="mt-4 prose max-w-prose dark:prose-invert">
+        {{ . | emojify }}
+      </section>
+    {{ end }}
+  </header>
+
+  {{ if gt (len $pages) 0 }}
+    {{ range ($pages.GroupByDate "2006-01-02") }}
+      <section class="archive-group">
+        <h2 class="archive-group-title">
+          {{ .Key }}
+        </h2>
+        <hr class="archive-group-divider" />
+        <ul class="archive-list">
+          {{ range .Pages }}
+            {{ $tags := .GetTerms "tags" }}
+            <li>
+              <article class="archive-item">
+                <div class="archive-item-main">
+                  <a
+                    href="{{ .Permalink }}"
+                    class="archive-item-title"
+                  >
+                    {{ .Title | emojify }}
+                  </a>
+                  <div class="archive-item-footer">
+                    <div class="archive-item-meta">
+                      <time
+                        class="archive-item-date"
+                        datetime="{{ .Date.Format "2006-01-02" }}"
+                      >
+                        {{ .Date.Format "2006-01-02" }}
+                      </time>
+                    </div>
+                    {{ if $tags }}
+                      <div class="archive-item-tags">
+                        {{ range $index, $tag := first 3 $tags }}
+                          {{ $colorIndex := mod $index 6 }}
+                          <a
+                            href="{{ $tag.Permalink }}"
+                            class="tag-link tag-color-{{ $colorIndex }}"
+                          >
+                            {{ $tag.LinkTitle }}
+                          </a>
+                        {{ end }}
+                      </div>
+                    {{ end }}
+                  </div>
+                </div>
+              </article>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
+  {{ else }}
+    <section class="prose mt-10 dark:prose-invert">
+      <p class="border-t py-8">
+        <em>{{ i18n "list.no_articles" | emojify }}</em>
+      </p>
+    </section>
+  {{ end }}
+{{ end }}
