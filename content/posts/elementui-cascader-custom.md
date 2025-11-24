@@ -3,6 +3,8 @@ title: "ElementUI 级联组件实现自定义输入和模糊搜索"
 date: 2024-12-23
 tags: ["vue.js", "elementui", "前端"]
 slug: "elementui-cascader-custom"
+description: 这是一篇用于解决 Element UI 中的级联组件的自定义输入内容以及对组件中的内容同时还能进行模糊搜索 
+keywords: ["ElementUI 级联组件","前端 Vue"]
 ---
 
 记录一下工作中碰到的需求，对于新手小白碰到这种情况可以参考，高手的话还有很多更好的办法。哈哈。

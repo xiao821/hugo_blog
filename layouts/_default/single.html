@@ -10,17 +10,36 @@
       <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral break-words">
         {{ .Title | emojify }}
       </h1>
-      {{ if or
-        (.Params.showDate | default (.Site.Params.article.showDate | default true))
-        (and (.Params.showDateUpdated | default (.Site.Params.article.showDateUpdated | default false)) (ne (partial "functions/date.html" .Date) (partial "functions/date.html" .Lastmod)))
-        (and (.Params.showWordCount | default (.Site.Params.article.showWordCount | default false)) (ne .WordCount 0))
-        (and (.Params.showReadingTime | default (.Site.Params.article.showReadingTime | default true)) (ne .ReadingTime 0))
-        (.Params.showEdit | default (.Site.Params.article.showEdit | default false))
-      }}
-        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
-          {{ partial "article-meta.html" (dict "context" . "scope" "single") }}
-        </div>
-      {{ end }}
+      <div class="mb-10 text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+        {{ if or
+          (.Params.showDate | default (.Site.Params.article.showDate | default true))
+          (and (.Params.showDateUpdated | default (.Site.Params.article.showDateUpdated | default false)) (ne (partial "functions/date.html" .Date) (partial "functions/date.html" .Lastmod)))
+          (and (.Params.showWordCount | default (.Site.Params.article.showWordCount | default false)) (ne .WordCount 0))
+          (and (.Params.showReadingTime | default (.Site.Params.article.showReadingTime | default true)) (ne .ReadingTime 0))
+          (.Params.showEdit | default (.Site.Params.article.showEdit | default false))
+        }}
+          <div class="mb-3">
+            {{ partial "article-meta.html" (dict "context" . "scope" "single") }}
+          </div>
+        {{ end }}
+        {{ with .Description }}
+          <p class="mb-3 text-base text-neutral-700 dark:text-neutral-300">
+            {{ . | emojify }}
+          </p>
+        {{ end }}
+        {{ with .Params.keywords }}
+          <div class="mt-1 flex flex-wrap gap-2">
+            {{ range . }}
+              <span
+                class="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-1 text-xs text-neutral-600 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
+                style="margin-right: 0.5rem;"
+              >
+                {{ . }}
+              </span>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
       {{ with $feature }}
         <div class="prose">
           {{ $altText := $.Params.featureAlt | default $.Params.coverAlt | default "" }}
@@ -64,4 +83,3 @@
     </footer>
   </article>
 {{ end }}
-

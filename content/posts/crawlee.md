@@ -3,6 +3,8 @@ title: "使用 Crawlee 框架进行爬虫时的常见问题及解决方案"
 date: 2024-09-17
 tags: ["node.js", "Crawlee", "爬虫"]
 slug: "crawlee"
+description: 本文主要描述Crawlee 框架的搭建时出现运行错误的解决方法 
+keywords: ["node 爬虫","Crawlee 框架"]
 ---
 
 
