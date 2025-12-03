@@ -1,0 +1,34 @@
+# 友链数据文件
+# 添加新友链时，只需要在对应分类下添加新的条目即可
+
+# 博客推荐
+blogs:
+  - name: "Ray Blog"
+    link: "https://blog.anluoying.com"
+    avatar: "https://blog.anluoying.com/apple-touch-icon.png"
+    description: "这是一个全干工程师的博客，注意是全干！"
+
+# 我的网站
+mysites:
+  - name: "Linux.do"
+    link: "https://linux.do/u/xiaoss12138/activity"
+    avatar: "https://xssblog.211508.xyz/2025/12/89e830d0620e5c57286c497f74bc40ce.png"
+    description: "这里是我的 L 站"
+  
+  - name: "GitHub"
+    link: "https://github.com/xiao821?tab=repositories"
+    avatar: "https://xssblog.211508.xyz/2025/12/5d9c11732c8d436a5e6d485b2011835b.png"
+    description: "欢迎光顾我的 GitHub 仓库"
+  
+  - name: "CSDN"
+    link: "https://blog.csdn.net/qq_58001960?type=blog"
+    avatar: "https://xssblog.211508.xyz/2025/12/cca9812dbb6ef81c3c1470b0ef290c34.png"
+    description: "欢迎光顾我的 CSDN 博客"
+
+# 社区推荐（可选分类）
+# communities:
+#   - name: "开发者社区"
+#     link: "https://example.com"
+#     avatar: "https://via.placeholder.com/80"
+#     description: "活跃的开发者社区，技术交流的好地方"
+

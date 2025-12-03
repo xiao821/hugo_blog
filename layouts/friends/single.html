@@ -1,0 +1,107 @@
+{{ define "main" }}
+<article>
+  <header class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="mb-4 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral break-words">
+      {{ .Title | emojify }}
+    </h1>
+    {{ with .Description }}
+      <p class="mb-8 text-lg text-neutral-600 dark:text-neutral-300">
+        {{ . | emojify }}
+      </p>
+    {{ end }}
+  </header>
+
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="prose prose-neutral dark:prose-invert max-w-none mb-12">
+      {{ .Content }}
+    </div>
+
+    <!-- 从数据文件读取友链 -->
+    {{ $friends := .Site.Data.friends }}
+    
+    <!-- 博客推荐 -->
+    {{ with $friends.blogs }}
+      <div class="friends-section">
+        <h2 class="friends-category-title">博客推荐</h2>
+        <div class="friends-grid">
+          {{ range . }}
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="{{ .avatar }}" alt="{{ .name }}" loading="lazy" />
+              </div>
+              <div class="friend-info">
+                <h3 class="friend-name">{{ .name }}</h3>
+                <p class="friend-desc">{{ .description }}</p>
+                <a href="{{ .link }}" class="friend-link" target="_blank" rel="noopener noreferrer">
+                  访问网站 →
+                </a>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- 我的网站 -->
+    {{ with $friends.mysites }}
+      <div class="friends-section mt-12">
+        <h2 class="friends-category-title">我的网站</h2>
+        <div class="friends-grid">
+          {{ range . }}
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="{{ .avatar }}" alt="{{ .name }}" loading="lazy" />
+              </div>
+              <div class="friend-info">
+                <h3 class="friend-name">{{ .name }}</h3>
+                <p class="friend-desc">{{ .description }}</p>
+                <a href="{{ .link }}" class="friend-link" target="_blank" rel="noopener noreferrer">
+                  访问网站 →
+                </a>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- 社区推荐（可选） -->
+    {{ with $friends.communities }}
+      <div class="friends-section mt-12">
+        <h2 class="friends-category-title">社区推荐</h2>
+        <div class="friends-grid">
+          {{ range . }}
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="{{ .avatar }}" alt="{{ .name }}" loading="lazy" />
+              </div>
+              <div class="friend-info">
+                <h3 class="friend-name">{{ .name }}</h3>
+                <p class="friend-desc">{{ .description }}</p>
+                <a href="{{ .link }}" class="friend-link" target="_blank" rel="noopener noreferrer">
+                  访问网站 →
+                </a>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  </section>
+
+  <!-- 评论区 -->
+  <footer class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 print:hidden">
+    {{ if .Params.showComments | default (.Site.Params.article.showComments | default false) }}
+      {{ if templates.Exists "_partials/comments.html" }}
+        <div class="pt-3">
+          <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+          <div class="pt-3">
+            {{ partial "comments.html" . }}
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+  </footer>
+</article>
+{{ end }}
+
