@@ -1,0 +1,277 @@
+{{ define "main" }}
+  <header>
+    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <!-- <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title }}
+    </h1> -->
+  </header>
+
+  {{ if .Content }}
+    <section class="prose mt-4 max-w-prose dark:prose-invert">
+      {{ .Content | emojify }}
+    </section>
+  {{ end }}
+
+  {{ $terms := sort .Data.Terms "Count" "desc" }}
+  {{ $totalTerms := len $terms }}
+  {{ $totalCount := 0 }}
+  {{ range $terms }}
+    {{ $totalCount = add $totalCount .Count }}
+  {{ end }}
+
+  <section class="tag-bubbles-wrapper">
+    <div class="tag-bubbles-cloud" aria-label="{{ .Title }}">
+      {{ range $index, $term := $terms }}
+        {{ $count := $term.Count }}
+        {{ $sizeClass := "tag-bubble-size-s" }}
+        {{ if ge $count 15 }}
+          {{ $sizeClass = "tag-bubble-size-xl" }}
+        {{ else if ge $count 8 }}
+          {{ $sizeClass = "tag-bubble-size-lg" }}
+        {{ else if ge $count 4 }}
+          {{ $sizeClass = "tag-bubble-size-md" }}
+        {{ end }}
+        {{ $colorIndex := mod $index 6 }}
+        <button
+          type="button"
+          class="tag-bubble {{ $sizeClass }} tag-color-{{ $colorIndex }}"
+          data-size="{{ $count }}"
+          data-href="{{ $term.Page.Permalink }}"
+          data-full-text="{{ $term.Page.Title }}"
+          data-article-count="{{ $count }}"
+          aria-label="{{ $term.Page.Title }}（{{ $count }} 篇文章）"
+        >
+          <span class="tag-bubble-label">
+            {{ $term.Page.Title }}
+          </span>
+          {{ if $.Site.Params.taxonomy.showTermCount | default true }}
+            <span class="tag-bubble-count">
+              {{ $count }}
+            </span>
+          {{ end }}
+        </button>
+      {{ end }}
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var container = document.querySelector(".tag-bubbles-cloud");
+      if (!container) return;
+
+      var bubbles = Array.from(container.querySelectorAll(".tag-bubble"));
+      
+      // Create tooltip element
+      var tooltip = document.createElement("div");
+      tooltip.className = "tag-bubble-tooltip";
+      document.body.appendChild(tooltip);
+      
+      // Configuration
+      var padding = 10; // Spacing between bubbles
+      var centerX = 0;
+      var centerY = 0;
+      
+      // Calculate Radius based on class for collision detection
+      function getRadius(el) {
+        if (el.classList.contains("tag-bubble-size-xl")) return 75;
+        if (el.classList.contains("tag-bubble-size-lg")) return 60;
+        if (el.classList.contains("tag-bubble-size-md")) return 50;
+        return 40; // size-s
+      }
+
+      // Responsive radius adjustment
+      if (window.innerWidth < 640) {
+        // Must match CSS mobile sizes / 2
+        function getRadiusMobile(el) {
+          if (el.classList.contains("tag-bubble-size-xl")) return 55;
+          if (el.classList.contains("tag-bubble-size-lg")) return 45;
+          if (el.classList.contains("tag-bubble-size-md")) return 37.5;
+          return 30;
+        }
+        getRadius = getRadiusMobile;
+      }
+
+      var placed = [];
+
+      // Sort bubbles by count (size) descending just to be safe
+      // They should already be sorted by template, but let's ensure
+      bubbles.sort(function (a, b) {
+        var sizeA = parseInt(a.getAttribute("data-size") || "0");
+        var sizeB = parseInt(b.getAttribute("data-size") || "0");
+        return sizeB - sizeA;
+      });
+
+      bubbles.forEach(function (bubble, index) {
+        var r = getRadius(bubble);
+        var x = 0;
+        var y = 0;
+
+        if (index > 0) {
+          // Spiral algorithm
+          var angle = 0;
+          var step = 0.2; // angle step in radians
+          var distance = 0;
+          var collision = true;
+          
+          while (collision) {
+            // Archimedean spiral: r = a + b * theta
+            // We use a simplified version: dist increases as angle increases
+            distance = 50 + (angle * 12); // Tune these for tightness
+            
+            x = Math.cos(angle) * distance;
+            y = Math.sin(angle) * distance;
+
+            collision = false;
+            
+            // Check against all previously placed bubbles
+            for (var i = 0; i < placed.length; i++) {
+              var p = placed[i];
+              var dx = x - p.x;
+              var dy = y - p.y;
+              var distSq = dx * dx + dy * dy;
+              var minDist = r + p.r + padding;
+              
+              if (distSq < minDist * minDist) {
+                collision = true;
+                break;
+              }
+            }
+
+            if (collision) {
+              angle += step;
+            }
+          }
+        }
+
+        placed.push({ el: bubble, x: x, y: y, r: r });
+      });
+
+      // Calculate bounding box to center and size container
+      var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      placed.forEach(function (p) {
+        minX = Math.min(minX, p.x - p.r);
+        maxX = Math.max(maxX, p.x + p.r);
+        minY = Math.min(minY, p.y - p.r);
+        maxY = Math.max(maxY, p.y + p.r);
+      });
+
+      var contentWidth = maxX - minX;
+      var contentHeight = maxY - minY;
+      
+      // Add padding to container
+      var containerPadding = 40;
+      container.style.height = (contentHeight + containerPadding * 2) + "px";
+
+      var offsetX = container.offsetWidth / 2;
+      var offsetY = (contentHeight + containerPadding * 2) / 2;
+      // Adjust offset to center the cloud based on its bounding box center
+      var cloudCenterX = (minX + maxX) / 2;
+      var cloudCenterY = (minY + maxY) / 2;
+      
+      offsetX -= cloudCenterX;
+      offsetY -= cloudCenterY;
+
+      // Apply positions and animations
+      placed.forEach(function (p) {
+        var bubble = p.el;
+        bubble.style.left = (p.x + offsetX) + "px";
+        bubble.style.top = (p.y + offsetY) + "px";
+        
+        // Random float parameters
+        var floatDx = (Math.random() - 0.5) * 20; // -10 to 10px
+        var floatDy = -10 - Math.random() * 10;   // -10 to -20px (upwards tendency)
+        var duration = 3 + Math.random() * 4;     // 3-7s
+        var delay = Math.random() * -5;
+        
+        bubble.style.setProperty("--float-dx", floatDx + "px");
+        bubble.style.setProperty("--float-dy", floatDy + "px");
+        bubble.style.animationDuration = duration + "s";
+        bubble.style.animationDelay = delay + "s";
+
+        // Click handler
+        bubble.addEventListener("click", function () {
+          var href = bubble.getAttribute("data-href");
+          if (href) window.location.href = href;
+        });
+        
+        // Tooltip handlers
+        bubble.addEventListener("mouseenter", function (e) {
+          var label = bubble.querySelector(".tag-bubble-label");
+          if (!label) return;
+          
+          // Check if text is truncated
+          var isTruncated = label.scrollWidth > label.clientWidth;
+          
+          if (isTruncated) {
+            var fullText = bubble.getAttribute("data-full-text");
+            var count = bubble.getAttribute("data-article-count");
+            tooltip.textContent = fullText + "（" + count + " 篇文章）";
+            tooltip.classList.add("show");
+            
+            // Position tooltip
+            updateTooltipPosition(e);
+          }
+        });
+        
+        bubble.addEventListener("mousemove", function (e) {
+          if (tooltip.classList.contains("show")) {
+            updateTooltipPosition(e);
+          }
+        });
+        
+        bubble.addEventListener("mouseleave", function () {
+          tooltip.classList.remove("show");
+        });
+        
+        // Show bubble
+        setTimeout(function() {
+          bubble.classList.add("is-visible");
+        }, Math.random() * 500); // Staggered fade in
+      });
+      
+      // Helper function to position tooltip
+      function updateTooltipPosition(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        var offset = 15;
+        
+        // Get tooltip dimensions
+        var tooltipRect = tooltip.getBoundingClientRect();
+        var tooltipWidth = tooltipRect.width;
+        var tooltipHeight = tooltipRect.height;
+        
+        // Default position: below and to the right of cursor
+        var left = x + offset;
+        var top = y + offset;
+        
+        // Check if tooltip would overflow right edge
+        if (left + tooltipWidth > window.innerWidth) {
+          left = x - tooltipWidth - offset;
+        }
+        
+        // Check if tooltip would overflow bottom edge
+        if (top + tooltipHeight > window.innerHeight) {
+          top = y - tooltipHeight - offset;
+        }
+        
+        // Check if tooltip would overflow left edge
+        if (left < 0) {
+          left = offset;
+        }
+        
+        // Check if tooltip would overflow top edge
+        if (top < 0) {
+          top = offset;
+        }
+        
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
+      }
+
+      // Search functionality
+      // Removed search input listener since input was removed
+    })();
+  </script>
+{{ end }}

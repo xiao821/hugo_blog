@@ -1,4 +1,11 @@
-# 如何解决 JavaScript 大整数精度丢失问题
+---
+title: "如何解决 JavaScript 大整数精度丢失问题"
+date: 2025-09-23
+tags: ["Javascript", "前端", "大整数精度"]
+slug: "js-bigint"
+description: 介绍 JavaScript Number 大整数精度丢失的原因，并通过在 JSON 解析和对象处理阶段将大整数字段转为字符串来避免精度问题
+keywords: ["JavaScript 大整数", "Number 精度丢失", "JSON 解析", "BigInt 处理"]
+---
 
 关于这个大精度丢失问题，一开始我还没在意，直到上班碰到了这个问题，当时记得在处理后端返回的大整数拿到一个超过 js 精度的 id 时，怎么传值都对不上，后面通过打印检查对比发现，我拿到的 id 跟我所获取到的不一致，当时还不知道是什么情况，后面上网搜索才知道这是属于一个精度丢失问题。
 

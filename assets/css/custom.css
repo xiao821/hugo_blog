@@ -165,12 +165,17 @@ body {
 .article-list-grid {
   display: grid;
   grid-template-columns: 1fr; /* Force single column always */
-  gap: 2.5rem; /* 40px vertical gap */
+  gap: 1.5rem; /* 40px vertical gap */
   max-width: 900px; /* 增加列表宽度限制 (原 800px) */
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+/* Ensure post cards have proper spacing as fallback */
+.post-card {
+  margin-bottom: 0; /* Remove margin since gap handles spacing */
 }
 
 /* Base Tag Style */
@@ -371,7 +376,7 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
 
   /* Adjust grid gap on mobile */
   .article-list-grid {
-    gap: 1.5rem;
+    gap: 1rem;
     padding-left: 0;
     padding-right: 0;
     max-width: 100%;
@@ -473,8 +478,9 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
   }
 
   .article-list-grid {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+    gap: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .post-card {
@@ -615,4 +621,168 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
   .archive-item-title {
     white-space: normal;
   }
+}
+
+/* Tag bubbles page styles */
+.tag-bubbles-wrapper {
+  max-width: 100%;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+  overflow: hidden; /* Prevent bubbles from overflowing */
+}
+
+.tag-bubbles-cloud {
+  position: relative;
+  width: 100%;
+  min-height: 600px; /* Initial height, JS can adjust */
+  margin: 0 auto;
+  display: block; /* Changed from flex to block for absolute positioning */
+}
+
+.tag-bubble {
+  position: absolute; /* Changed to absolute for custom layout */
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Circle */
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Softer border */
+  /* Enhanced Glassmorphism */
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.05),
+    inset 0 0 20px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem;
+  width: var(--bubble-size, 80px);
+  height: var(--bubble-size, 80px);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  opacity: 0; /* Hidden initially until JS places them */
+  transform: translate(-50%, -50%) scale(0); /* Start small */
+  z-index: 1;
+  /* Floating animation */
+  animation: tag-bubble-float 8s ease-in-out infinite alternate;
+  will-change: transform;
+  overflow: hidden; /* Keep content inside circle */
+}
+
+/* Add a shine effect */
+.tag-bubble::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 40%;
+  height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  transform: rotate(-45deg);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.tag-bubble.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.tag-bubble:hover {
+  z-index: 10;
+  transform: translate(-50%, -50%) scale(1.15) !important;
+  box-shadow: 
+    0 10px 25px rgba(44, 44, 44, 0.1),
+    inset 0 0 25px rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Glassy Bubble Colors (Using gradients for more depth) */
+.tag-bubble.tag-color-0 { background: radial-gradient(circle at 30% 30%, rgba(254, 202, 202, 0.4), rgba(254, 202, 202, 0.1)); color: #991B1B; border-color: rgba(254, 202, 202, 0.3); }
+.tag-bubble.tag-color-1 { background: radial-gradient(circle at 30% 30%, rgba(221, 214, 254, 0.4), rgba(221, 214, 254, 0.1)); color: #5B21B6; border-color: rgba(221, 214, 254, 0.3); }
+.tag-bubble.tag-color-2 { background: radial-gradient(circle at 30% 30%, rgba(167, 243, 208, 0.4), rgba(167, 243, 208, 0.1)); color: #065F46; border-color: rgba(167, 243, 208, 0.3); }
+.tag-bubble.tag-color-3 { background: radial-gradient(circle at 30% 30%, rgba(253, 186, 116, 0.4), rgba(253, 186, 116, 0.1)); color: #9A3412; border-color: rgba(253, 186, 116, 0.3); }
+.tag-bubble.tag-color-4 { background: radial-gradient(circle at 30% 30%, rgba(191, 219, 254, 0.4), rgba(191, 219, 254, 0.1)); color: #1E40AF; border-color: rgba(191, 219, 254, 0.3); }
+.tag-bubble.tag-color-5 { background: radial-gradient(circle at 30% 30%, rgba(251, 207, 232, 0.4), rgba(251, 207, 232, 0.1)); color: #9D174D; border-color: rgba(251, 207, 232, 0.3); }
+
+.dark .tag-bubble.tag-color-0 { background: radial-gradient(circle at 30% 30%, rgba(127, 29, 29, 0.3), rgba(127, 29, 29, 0.1)); color: #FECACA; border-color: rgba(254, 202, 202, 0.15); }
+.dark .tag-bubble.tag-color-1 { background: radial-gradient(circle at 30% 30%, rgba(76, 29, 149, 0.3), rgba(76, 29, 149, 0.1)); color: #DDD6FE; border-color: rgba(221, 214, 254, 0.15); }
+.dark .tag-bubble.tag-color-2 { background: radial-gradient(circle at 30% 30%, rgba(6, 78, 59, 0.3), rgba(6, 78, 59, 0.1)); color: #A7F3D0; border-color: rgba(167, 243, 208, 0.15); }
+.dark .tag-bubble.tag-color-3 { background: radial-gradient(circle at 30% 30%, rgba(124, 45, 18, 0.3), rgba(124, 45, 18, 0.1)); color: #FED7AA; border-color: rgba(253, 186, 116, 0.15); }
+.dark .tag-bubble.tag-color-4 { background: radial-gradient(circle at 30% 30%, rgba(30, 58, 138, 0.3), rgba(30, 58, 138, 0.1)); color: #BFDBFE; border-color: rgba(191, 219, 254, 0.15); }
+.dark .tag-bubble.tag-color-5 { background: radial-gradient(circle at 30% 30%, rgba(131, 24, 67, 0.3), rgba(131, 24, 67, 0.1)); color: #FBCFE8; border-color: rgba(251, 207, 232, 0.15); }
+
+
+/* Sizes for circles - ensuring they are large enough for text */
+.tag-bubble-size-s { --bubble-size: 80px; font-size: 0.8rem; }
+.tag-bubble-size-md { --bubble-size: 100px; font-size: 0.9rem; }
+.tag-bubble-size-lg { --bubble-size: 120px; font-size: 1rem; }
+.tag-bubble-size-xl { --bubble-size: 150px; font-size: 1.2rem; }
+
+.tag-bubble-label {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.tag-bubble-count {
+  font-size: 0.75em;
+  opacity: 0.8;
+  margin-top: 2px;
+  background: rgba(255,255,255,0.3);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+@keyframes tag-bubble-float {
+  0% { transform: translate(-50%, -50%) translateY(0); }
+  100% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+@media (max-width: 640px) {
+  .tag-bubble-size-s { --bubble-size: 60px; font-size: 0.7rem; }
+  .tag-bubble-size-md { --bubble-size: 75px; font-size: 0.8rem; }
+  .tag-bubble-size-lg { --bubble-size: 90px; font-size: 0.9rem; }
+  .tag-bubble-size-xl { --bubble-size: 110px; font-size: 1rem; }
+}
+
+/* Custom Tooltip Styles */
+.tag-bubble-tooltip {
+  position: fixed;
+  z-index: 1000;
+  padding: 8px 12px;
+  background-color: #1e293b;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  max-width: 300px;
+  word-wrap: break-word;
+  white-space: normal;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tag-bubble-tooltip.show {
+  opacity: 1;
+}
+
+.dark .tag-bubble-tooltip {
+  background-color: #f8fafc;
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15), 0 4px 10px rgba(255, 255, 255, 0.1);
 }
