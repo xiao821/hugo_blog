@@ -1,9 +1,17 @@
 <script>
   (function () {
+    function onReady(fn) {
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", fn);
+      } else {
+        fn();
+      }
+    }
+
     function scrollToTop() {
       // Try multiple methods to ensure scrolling works
       console.log("Attempting to scroll to top");
-      
+
       // Method 1: Use window.scrollTo
       try {
         window.scrollTo({
@@ -68,8 +76,11 @@
         event.preventDefault();
         event.stopPropagation();
 
-        console.log("Scroll to top clicked - current scroll position:", window.pageYOffset || document.documentElement.scrollTop);
-        
+        console.log(
+          "Scroll to top clicked - current scroll position:",
+          window.pageYOffset || document.documentElement.scrollTop
+        );
+
         scrollToTop();
 
         return false;
@@ -78,12 +89,154 @@
       console.log("to-top click handler attached successfully");
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", function () {
-        attachToTopClick();
+    function initImageZoom() {
+      var zoomImages = document.querySelectorAll(".prose img");
+      if (!zoomImages.length) return;
+
+      var overlay = document.querySelector(".image-zoom-overlay");
+      if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "image-zoom-overlay";
+        var overlayImg = document.createElement("img");
+        overlayImg.className = "image-zoom-img";
+        overlay.appendChild(overlayImg);
+        document.body.appendChild(overlay);
+      }
+
+      var overlayImgEl = overlay.querySelector("img");
+
+      function closeOverlay() {
+        overlay.classList.remove("active");
+        document.body.classList.remove("image-zoom-lock");
+        if (overlayImgEl) {
+          overlayImgEl.src = "";
+        }
+      }
+
+      function openOverlay(src, alt) {
+        if (!overlayImgEl || !src) return;
+        overlayImgEl.src = src;
+        overlayImgEl.alt = alt || "";
+        overlay.classList.add("active");
+        document.body.classList.add("image-zoom-lock");
+      }
+
+      overlay.addEventListener("click", function (event) {
+        event.preventDefault();
+        closeOverlay();
       });
-    } else {
-      attachToTopClick();
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && overlay.classList.contains("active")) {
+          closeOverlay();
+        }
+      });
+
+      zoomImages.forEach(function (img) {
+        img.classList.add("is-zoomable-img");
+
+        img.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          var source = img.dataset.zoomSrc || img.currentSrc || img.src;
+          if (!source) return;
+
+          openOverlay(source, img.alt || "");
+        });
+      });
     }
+
+    function initCopyButtons() {
+      var blocks = document.querySelectorAll(".highlight");
+      if (!blocks.length) return;
+
+      var COPY_ICON = "⧉";
+      var COPIED_ICON = "⎘";
+      var ERROR_ICON = "✖";
+
+      function showResult(button, icon, label, className) {
+        button.textContent = icon || COPY_ICON;
+        button.setAttribute("aria-label", label);
+        button.classList.add(className);
+        setTimeout(function () {
+          button.textContent = COPY_ICON;
+          button.setAttribute("aria-label", "Copy code");
+          button.classList.remove(className);
+        }, 1800);
+      }
+
+      function fallbackCopy(text, onDone) {
+        try {
+          var textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          textarea.style.pointerEvents = "none";
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          var ok = document.execCommand("copy");
+          document.body.removeChild(textarea);
+          onDone(ok);
+        } catch (err) {
+          onDone(false);
+        }
+      }
+
+      blocks.forEach(function (block) {
+        if (block.dataset.hasCopyButton === "true") return;
+
+        block.dataset.hasCopyButton = "true";
+        block.classList.add("has-copy-button");
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "copy-code-btn";
+        button.setAttribute("aria-label", "Copy code");
+        button.textContent = COPY_ICON;
+        block.appendChild(button);
+
+        button.addEventListener("click", function () {
+          var code = block.querySelector("pre");
+          if (!code) return;
+          var text = code.innerText.trim();
+          if (!text) return;
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(
+              function () {
+                showResult(button, COPIED_ICON, "Copied", "copied");
+              },
+              function () {
+                fallbackCopy(text, function (success) {
+                  showResult(
+                    button,
+                    success ? COPIED_ICON : ERROR_ICON,
+                    success ? "Copied" : "Copy failed",
+                    success ? "copied" : "copy-error"
+                  );
+                });
+              }
+            );
+          } else {
+            fallbackCopy(text, function (success) {
+              showResult(
+                button,
+                success ? COPIED_ICON : ERROR_ICON,
+                success ? "Copied" : "Copy failed",
+                success ? "copied" : "copy-error"
+              );
+            });
+          }
+        });
+      });
+    }
+
+    onReady(function () {
+      attachToTopClick();
+      initImageZoom();
+      initCopyButtons();
+    });
   })();
 </script>

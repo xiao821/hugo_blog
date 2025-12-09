@@ -8,6 +8,9 @@
     <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
       {{ .Title }}
     </h1>
+    <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+      共 {{ len $pages }} 篇文章
+    </p>
     {{ with .Content }}
       <section class="mt-4 prose max-w-prose dark:prose-invert">
         {{ . | emojify }}

@@ -994,3 +994,128 @@ footer > div.flex.items-center { justify-content: center; flex-direction: column
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* 代码块复制按钮 */
+.highlight {
+  position: relative;
+}
+
+.highlight pre {
+  padding-right: 3.25rem;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: rgba(248, 250, 252, 0.95);
+  color: #0f172a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-2px);
+}
+
+.copy-code-btn:hover {
+  background: #e2e8f0;
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+.copy-code-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.copy-code-btn.copied {
+  background: #e0f2fe;
+  color: #0f172a;
+  border-color: #93c5fd;
+}
+
+.copy-code-btn.copy-error {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.dark .copy-code-btn {
+  background: rgba(15, 23, 42, 0.95);
+  color: #e2e8f0;
+  border-color: rgba(226, 232, 240, 0.1);
+}
+
+.dark .copy-code-btn:hover {
+  background: #1f2937;
+  border-color: rgba(226, 232, 240, 0.2);
+}
+
+.dark .copy-code-btn.copied {
+  background: #1f2937;
+  color: #e0f2fe;
+  border-color: #38bdf8;
+}
+
+.dark .copy-code-btn.copy-error {
+  background: #2f1416;
+  color: #fecdd3;
+  border-color: #fca5a5;
+}
+
+.highlight:hover .copy-code-btn,
+.highlight:focus-within .copy-code-btn {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* 图片点击放大 */
+.prose img.is-zoomable-img {
+  cursor: zoom-in;
+}
+
+.image-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in-out;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.image-zoom-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-zoom-img {
+  max-width: min(1200px, 90vw);
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  background: #0f172a;
+  object-fit: contain;
+}
+
+.image-zoom-lock {
+  overflow: hidden;
+}
