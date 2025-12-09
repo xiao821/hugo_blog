@@ -1,4 +1,12 @@
 [[main]]
+name = "切换主题"
+identifier = "appearance"
+weight = 1
+[main.params]
+action = "appearance"
+showName = false
+
+[[main]]
 name = "文章"
 pageRef = "posts"
 weight = 10

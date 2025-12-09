@@ -11,6 +11,14 @@
 # ordered by weight from lowest to highest.
 
 [[main]]
+  name = "Theme"
+  identifier = "appearance"
+  weight = 1
+  [main.params]
+    action = "appearance"
+    showName = false
+
+[[main]]
   name = "Blog"
   pageRef = "posts"
   weight = 10
