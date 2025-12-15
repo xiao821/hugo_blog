@@ -7,9 +7,6 @@ description: 一次 Nginx 音频 403 问题的排查与复盘，涉及 Docker �
 keywords: ["nginx", "docker", "403"]
 ---
 
-
-# 一次 Nginx 音频 403 问题的完整排查与复盘（Docker 场景）
-
 ## 背景
 
 在今天工作时碰到了一个非常奇怪的问题：
