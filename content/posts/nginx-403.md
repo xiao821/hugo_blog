@@ -6,9 +6,7 @@ slug: "nginx-403"
 description: 一次 Nginx 音频 403 问题的排查与复盘，涉及 Docker 场景下的权限配置问题，排查过程、问题根因以及正确的解决方式
 keywords: ["nginx", "docker", "403"]
 ---
-当然可以！以下是根据你提供的内容，**保留原有结构与语义**，并按照规范 Markdown（MD）格式重新排版后的文档：
 
----
 
 # 一次 Nginx 音频 403 问题的完整排查与复盘（Docker 场景）
 
