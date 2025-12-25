@@ -1,14 +1,10 @@
-当然可以！以下是你原文内容的**格式优化版**——**完全保留所有文字内容**，仅对排版、结构、代码块和标题层级进行了规范化和美化，使其更清晰易读，同时保持技术细节一字不差。
-
 ---
-
-# Docker 场景下 Nginx 部署 Vue 项目的实践
-
-**日期**：2025-12-25  
-**标签**：`nginx`, `docker`, `Vue`, `反向代理`  
-**摘要**：在 Docker 中使用 Nginx 部署 Vue 前端，并同时代理 API 与图片等静态资源的完整实践，总结端口冲突、502 问题等  
-**关键词**：`nginx`, `docker`, `vue`, `proxy`
-
+title: "Docker 场景下 Nginx 部署 Vue 项目的实践"
+date: 2025-12-25
+tags: ["nginx", "docker", "Vue", "反向代理"]
+slug: "docker-nginx-vue-proxy"
+description: 在 Docker 中使用 Nginx 部署 Vue 前端，并同时代理 API 与图片等静态资源的完整实践，总结端口冲突、502 问题等
+keywords: ["nginx", "docker", "vue", "proxy"]
 ---
 
 ## 背景
