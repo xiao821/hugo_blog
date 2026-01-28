@@ -14,13 +14,25 @@
 </article>
 
 {{ $posts := where .Site.RegularPages "Type" "posts" }}
+{{ $latestPosts := first 5 $posts.ByDate.Reverse }}
 {{ if gt (len $posts) 0 }}
   <section aria-label="文章列表" class="mt-12">
     <!-- 使用 article-list-grid 类来强制样式生效 -->
     <div class="article-list-grid">
-      {{ range $posts.ByDate.Reverse }}
+      {{ range $latestPosts }}
         {{ partial "article-link.html" . }}
       {{ end }}
     </div>
+    {{ with .Site.GetPage "section" "posts" }}
+      <div class="mt-8 flex justify-center">
+        <a
+          href="{{ .RelPermalink }}"
+          class="inline-flex items-center gap-2 rounded-md border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500"
+        >
+          查看更多
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    {{ end }}
   </section>
 {{ end }}

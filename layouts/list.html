@@ -35,7 +35,7 @@
     <section class="mt-12">
       <!-- 使用 article-list-grid 类来强制样式生效 -->
       <div class="article-list-grid">
-        {{ range (.Paginate .Pages).Pages }}
+        {{ range (.Paginate .Pages 5).Pages }}
           {{ partial "article-link.html" . }}
         {{ end }}
       </div>
