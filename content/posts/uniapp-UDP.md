@@ -15,7 +15,7 @@ keywords: ["uniapp", "UDP", "局域网扫描", "udp-client", "广播通信"]
 
 > **参考文章**：[xl__qd - CSDN 博客](https://blog.csdn.net/lcc2001/article/details/134135172)
 
-我找到了这个![udp-client](https://ext.dcloud.net.cn/plugin?id=6833) 的插件，这个插件完全免费，于是我下载下来，将里面的 `aar` 包放到我的项目中。
+我找到了这个[udp-client](https://ext.dcloud.net.cn/plugin?id=6833) 的插件，这个插件完全免费，于是我下载下来，将里面的 `aar` 包放到我的项目中。
 
 这个地方需要注意，放到我们项目中之后，我们需要在 Hbuildx 中将这个包在 mainfest.json中的安卓/IOS 原生插件配置页面中引入进来，
 
