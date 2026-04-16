@@ -1,10 +1,10 @@
 ---
-title: "微前端 qiankun 的学习"
+title: "微前端 qiankun 的学习 - 1"
 date: 2026-04-16
-tags: ["前端", "微前端", "qiankun", "Vue3"]
+tags: ["微前端", "qiankun"]
 slug: "qiankun-1"
 description: "记录初学微前端 qiankun 的理解，以及主应用注册子应用、Vue 子应用接入 qiankun 的基础代码和注意点"
-keywords: ["微前端", "qiankun", "Vue3", "vite-plugin-qiankun", "主应用", "子应用"]
+keywords: ["微前端", "qiankun", "vite-plugin-qiankun", "主应用", "子应用"]
 ---
 
 其实在最初找工作的时候就跟一些同为前端的朋友交流过，那个时候了解到的一个概念是叫“大前端”，当时其实是有点懵的，刚毕业感觉自己什么都不会，这个概念也是第一次听到，后面了解到的就是前端不仅仅只是做web开发。还需要涉及更多领域，比如说微信小程序，APP,桌面端（Electron），甚至是 Node.js,SSR 这种。后面上班后视野逐渐更加开阔，了解到了一点点 docker 的皮毛，熟悉了 nginx等这种工程化的内容。对于这个大前端也有了一定的概念。
