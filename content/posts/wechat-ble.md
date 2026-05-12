@@ -1,13 +1,17 @@
 ---
 title: "微信小程序 BLE 扫描变慢与 allowDuplicatesKey 排查"
 date: 2026-05-12
-tags: ["微信小程序", "UniApp", "BLE", "蓝牙", "allowDuplicatesKey"]
+tags: ["微信小程序", "BLE", "蓝牙"]
 slug: "wechat-ble-allowduplicateskey"
 description: "记录 UniApp 开发微信小程序蓝牙通信时，BLE 设备断开后重新扫描缓慢的问题，以及 allowDuplicatesKey 设置为 true 后的排查结论。"
-keywords: ["微信小程序", "UniApp", "BLE", "蓝牙扫描", "allowDuplicatesKey", "onBluetoothDeviceFound"]
+keywords: ["微信小程序", "BLE", "蓝牙扫描", "allowDuplicatesKey", "onBluetoothDeviceFound"]
 ---
 
-今天在做微信小程序获取蓝牙权限 ble 扫描对应的无线设备时，发现一个这样的情况，我初次启动小程序扫描蓝牙是很快能扫描到，也能很快建立连接，但是我一旦断开蓝牙，重新打开，我就发现这个扫描无线设备非常缓慢，一直处于扫描中的状态。我就不是很明白，为什么会这样。于是我上网查了一下“UniApp 开发微信小程序蓝牙通信”的问题。我就找到了一篇文章，看到了一个关键数据“allowDuplicatesKey”，我在代码中是设置的 false，我就在想是不是这个问题，但是我问了 GPT，它说是跟这个参数无影响，
+今天在做微信小程序获取蓝牙权限 ble 扫描对应的无线设备时，发现一个这样的情况，我初次启动小程序扫描蓝牙是很快能扫描到，也能很快建立连接，但是我一旦断开蓝牙，重新打开，我就发现这个扫描无线设备非常缓慢，一直处于扫描中的状态。我就不是很明白，为什么会这样。于是我上网查了一下“UniApp 开发微信小程序蓝牙通信”的问题。我就找到了一篇参考文章
+
+> **参考文章**：[wx66ece9f42611c - UniApp 开发微信小程序蓝牙通信：从流程到避坑](https://blog.51cto.com/u_17028302/14274837)
+
+看到了一个关键数据“allowDuplicatesKey”，我在代码中是设置的 false，我就在想是不是这个问题，但是我问了 GPT，它说是跟这个参数无影响，
 
 ```text
 allowDuplicatesKey: false 只是表示本次扫描中同一个设备不重复回调。
